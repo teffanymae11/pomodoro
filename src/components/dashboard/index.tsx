@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   const [todo, setToDo] = useState<TaskVars[]>([])
   const [task, setTask] = useState<TaskVars>({ title: '', notes: '', favorite: false });
-  const [archive, setArchive] = useState<TaskVars[]>([])
+  // const [archive, setArchive] = useState<TaskVars[]>([])
 
   const [activeTimer, setActiveTimer] = useState<string>("pomodoro");
 
@@ -313,15 +313,11 @@ const Dashboard = () => {
               />
 
               <Favorite
-                archive={archive}
-                setArchive={setArchive}
                 todo={todo}
                 setToDo={setToDo}
               />
 
               <Archive
-                archive={archive}
-                setArchive={setArchive}
                 todo={todo}
                 setToDo={setToDo}
               />
@@ -380,8 +376,6 @@ const Dashboard = () => {
                         startTimer={startTimer}
                         setTaskList={setTaskList}
                         resetTimer={resetTimer}
-                        archive={archive}
-                        setArchive={setArchive}
                         handleShow={handleShow}
                         setUpdating={setUpdating}
                         task={task}

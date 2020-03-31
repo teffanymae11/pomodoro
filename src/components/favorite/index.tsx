@@ -10,8 +10,6 @@ import { useDispatch } from 'react-redux';
 import { addArchive } from '../../redux/actions'
 
 const Favorite: React.FC<FavoriteVars> = ({
-  archive,
-  setArchive,
   setToDo,
   todo
 }) => {
@@ -61,9 +59,9 @@ const Favorite: React.FC<FavoriteVars> = ({
       const item = { title: val.title, notes: val.notes, favorite: val.favorite }
       // setArchive([...archive, item])
       dispatch(addArchive(item))
-      localStorage.setItem("archive", JSON.stringify([...archive, item]));
+      // localStorage.setItem("archive", JSON.stringify([...archive, item]));
     },
-    [archive, setToDo, dispatch],
+    [setToDo, dispatch],
   )
 
   const favoriteList = useMemo(() => {

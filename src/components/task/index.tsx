@@ -11,15 +11,12 @@ const Task = ({
   startTimer,
   setTaskList,
   resetTimer,
-  archive,
-  setArchive,
   handleShow,
   setUpdating,
   task,
   setTask,
   setToDo,
-  setDraggedItem,
-
+  setDraggedItem
 }: AddTaskVars) => {
   const dispatch = useDispatch();
   const playtodoBtn = require('../../images/play-todo.png');
@@ -74,10 +71,10 @@ const Task = ({
       const item = { title: val.title, notes: val.notes, favorite: val.favorite }
       // setArchive([...archive, item])
       dispatch(addArchive(item))
-      localStorage.setItem("archive", JSON.stringify([...archive, item]));
+      // localStorage.setItem("archive", JSON.stringify([...archive, item]));
       resetTimer()
     },
-    [resetTimer, setToDo, archive, dispatch],
+    [resetTimer, setToDo, dispatch],
   )
 
   const onDragStart = (val: TaskVars) => {

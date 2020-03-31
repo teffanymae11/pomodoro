@@ -6,26 +6,28 @@ import ModalBody from 'react-bootstrap/ModalBody';
 import { ArchiveVars } from './types';
 import { TaskVars } from '../dashboard/types';
 import { Btn, Li, TextGroup, Heading3, Paragraph, BtnTodoBlock, BtnTodo, Ul } from '../styles';
+import { AppState } from '../../redux/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteArchive } from '../../redux/actions'
 
 const Archive: React.FC<ArchiveVars> = ({
-  archive,
-  setArchive,
   todo,
   setToDo
 }) => {
-
+  const dispatch = useDispatch();
+  const dataArchive: TaskVars[] = useSelector((state: AppState) => state)
   const [show, setShow] = useState<boolean>(false);
 
   const archiveBtn = require('../../images/archive.png');
   const unfavoritetodoBtn = require('../../images/unfavorite-todo.png');
   const deleteBtn = require('../../images/delete-todo.png');
 
-  const getTaskData = () => {
-    const getData = localStorage.getItem("archive");
-    if (getData == null) return
-    const finalData = JSON.parse(getData)
-    setArchive(finalData)
-  }
+  // const getTaskData = () => {
+  //   const getData = localStorage.getItem("archive");
+  //   if (getData == null) return
+  //   const finalData = JSON.parse(getData)
+  //   setArchive(finalData)
+  // }
 
   const onFavorite: (val: TaskVars) => void = useCallback(
     (val: TaskVars) => {
@@ -34,18 +36,20 @@ const Archive: React.FC<ArchiveVars> = ({
       setToDo([...todo, item])
       localStorage.setItem("taskdata", JSON.stringify([...todo, item]));
 
-      setArchive((arc: TaskVars[]) => {
-        const archive = arc.filter((arc: TaskVars) => arc !== val)
-        localStorage.setItem("archive", JSON.stringify(archive));
-        return archive
-      })
+      // setArchive((arc: TaskVars[]) => {
+      //   const archive = arc.filter((arc: TaskVars) => arc !== val)
+      //   localStorage.setItem("archive", JSON.stringify(archive));
+      //   return archive
+      // })
+
+      dispatch(deleteArchive(val))
     },
-    [ setArchive, setToDo, todo],
+    [setToDo, todo, dispatch],
   )
 
   const handleShow = () => {
     setShow(true);
-    getTaskData();
+    // getTaskData();
   }
 
   const handleClose = () => {
@@ -54,17 +58,18 @@ const Archive: React.FC<ArchiveVars> = ({
 
   const onRemove: (val: TaskVars) => void = useCallback(
     (val: TaskVars) => {
-      setArchive((arc: TaskVars[]) => {
-        localStorage.removeItem("archive");
-        return arc.filter((arc: TaskVars) => arc !== val)
-      })
+      // setArchive((arc: TaskVars[]) => {
+      //   localStorage.removeItem("archive");
+      //   return arc.filter((arc: TaskVars) => arc !== val)
+      // })
+      dispatch(deleteArchive(val))
     },
-    [setArchive],
+    [dispatch],
   )
 
   const archiveList = useMemo(() => {
     return (
-      archive.map((val: TaskVars, index: number) => {
+      dataArchive.map((val: TaskVars, index: number) => {
         return (
           <Li key={index}>
             <TextGroup>
@@ -80,7 +85,7 @@ const Archive: React.FC<ArchiveVars> = ({
         )
       })
     )
-  }, [archive, onFavorite, onRemove, deleteBtn, unfavoritetodoBtn])
+  }, [onFavorite, onRemove, deleteBtn, unfavoritetodoBtn, dataArchive])
 
   return (
     <>

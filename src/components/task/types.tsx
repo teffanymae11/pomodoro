@@ -5,8 +5,6 @@ export type AddTaskVars = {
     startTimer: () => void,
     setTaskList: React.Dispatch<any>,
     resetTimer: () => void,
-    archive:  TaskVars[],
-    setArchive: React.Dispatch<React.SetStateAction<TaskVars[]>>,
     handleShow: () => void,
     setUpdating: React.Dispatch<any>,
     task: TaskVars,

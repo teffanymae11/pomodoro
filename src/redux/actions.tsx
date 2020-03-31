@@ -7,3 +7,10 @@ export const addArchive = (item: TaskVars) => {
       payload: item
     };
   };
+
+  export const deleteArchive = (val: TaskVars) => {
+    return {
+      type: actionType.DELETE_ARCHIVE,
+      payload: val
+    };
+  };

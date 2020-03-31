@@ -1,1 +1,2 @@
 export const ADD_ARCHIVE = "ADD_ARCHIVE"
+export const DELETE_ARCHIVE = "DELETE_ARCHIVE"
