@@ -4,7 +4,8 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { AddTaskVars } from './types'
 import { TaskVars } from '../dashboard/types';
 import { TextGroup, BtnTodo, BtnPlayBlock, BtnTodoBlock, Heading3, Paragraph } from '../styles';
-
+import { useDispatch } from 'react-redux';
+import { addArchive } from '../../redux/actions'
 const Task = ({
   val,
   startTimer,
@@ -20,7 +21,7 @@ const Task = ({
   setDraggedItem,
 
 }: AddTaskVars) => {
-
+  const dispatch = useDispatch();
   const playtodoBtn = require('../../images/play-todo.png');
   // const favoriteBtn = require('../../images/favorite-todo.png');
   const unfavoriteBtn = require('../../images/unfavorite-todo.png');
@@ -70,11 +71,13 @@ const Task = ({
         return removetask
       })
 
-      setArchive([...archive, { title: val.title, notes: val.notes, favorite: val.favorite }])
-      localStorage.setItem("archive", JSON.stringify([...archive, { title: val.title, notes: val.notes, favorite: val.favorite }]));
+      const item = { title: val.title, notes: val.notes, favorite: val.favorite }
+      // setArchive([...archive, item])
+      dispatch(addArchive(item))
+      localStorage.setItem("archive", JSON.stringify([...archive, item]));
       resetTimer()
     },
-    [resetTimer, setToDo, archive, setArchive],
+    [resetTimer, setToDo, archive, dispatch],
   )
 
   const onDragStart = (val: TaskVars) => {

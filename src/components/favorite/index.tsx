@@ -6,6 +6,8 @@ import ModalBody from 'react-bootstrap/ModalBody';
 import { FavoriteVars } from './types';
 import { TaskVars } from '../dashboard/types';
 import { Btn, Li, TextGroup, Heading3, Paragraph, BtnTodoBlock, BtnTodo, Ul } from '../styles';
+import { useDispatch } from 'react-redux';
+import { addArchive } from '../../redux/actions'
 
 const Favorite: React.FC<FavoriteVars> = ({
   archive,
@@ -13,7 +15,7 @@ const Favorite: React.FC<FavoriteVars> = ({
   setToDo,
   todo
 }) => {
-
+  const dispatch = useDispatch();
   const favoriteBtn = require('../../images/favorite.png');
   const favoritetodoBtn = require('../../images/favorite-todo.png');
   const deleteBtn = require('../../images/delete-todo.png');
@@ -49,7 +51,6 @@ const Favorite: React.FC<FavoriteVars> = ({
 
   const onRemove: (val: TaskVars) => void = useCallback(
     (val: TaskVars) => {
-
       setToDo((todo: TaskVars[]) => {
         localStorage.removeItem("taskdata");
         const removetask = todo.filter((task: TaskVars) => val.title !== task.title || val.notes !== task.notes || val.favorite !== task.favorite);
@@ -57,14 +58,16 @@ const Favorite: React.FC<FavoriteVars> = ({
         return removetask
       })
 
-      setArchive([...archive, { title: val.title, notes: val.notes, favorite: val.favorite }])
-      localStorage.setItem("archive", JSON.stringify([...archive, { title: val.title, notes: val.notes, favorite: val.favorite }]));
+      const item = { title: val.title, notes: val.notes, favorite: val.favorite }
+      // setArchive([...archive, item])
+      dispatch(addArchive(item))
+      localStorage.setItem("archive", JSON.stringify([...archive, item]));
     },
-    [archive, setArchive, setToDo],
+    [archive, setToDo, dispatch],
   )
 
   const favoriteList = useMemo(() => {
-    const favlist = todo.filter((todo: TaskVars) =>  todo.favorite === true)
+    const favlist = todo.filter((todo: TaskVars) => todo.favorite === true)
     return (
       favlist.map((val: TaskVars, index: number) => {
         return (

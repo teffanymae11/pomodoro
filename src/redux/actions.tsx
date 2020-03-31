@@ -1,7 +1,9 @@
-import * as action from './strings'
+import * as actionType from './strings'
+import { TaskVars } from '../components/dashboard/types';
 
-export const signIn = () => {
+export const addArchive = (item: TaskVars) => {
     return {
-        type: action.SIGN_IN
-    }
-}
+      type: actionType.ADD_ARCHIVE,
+      payload: item
+    };
+  };
