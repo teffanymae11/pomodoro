@@ -10,9 +10,22 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-modal": "^3.10.4",
+    "@types/styled-components": "^5.0.1",
+    "bootstrap": "^4.4.1",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-browser-notifications": "^1.0.14",
+    "react-desktop-notification": "^1.0.9",
     "react-dom": "^16.12.0",
+    "react-hotkeys-hook": "^1.5.4",
+    "react-modal": "^3.11.1",
+    "react-redux": "^7.2.0",
     "react-scripts": "3.3.1",
+    "react-simple-storage": "^1.4.1",
+    "react-web-notification": "^0.7.0",
+    "redux": "^4.0.5",
+    "styled-components": "^5.0.1",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -35,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-redux": "^7.1.7"
   }
 }
