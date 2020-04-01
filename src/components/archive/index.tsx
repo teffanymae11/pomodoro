@@ -6,7 +6,6 @@ import ModalBody from 'react-bootstrap/ModalBody';
 import { ArchiveVars } from './types';
 import { TaskVars } from '../dashboard/types';
 import { Btn, Li, TextGroup, Heading3, Paragraph, BtnTodoBlock, BtnTodo, Ul } from '../styles';
-import { AppState } from '../../redux/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteArchive } from '../../redux/actions'
 
@@ -15,7 +14,7 @@ const Archive: React.FC<ArchiveVars> = ({
   setToDo
 }) => {
   const dispatch = useDispatch();
-  const dataArchive: TaskVars[] = useSelector((state: AppState) => state)
+  const dataArchive:TaskVars[] = useSelector((state: any) => state.archiveReducer)
   const [show, setShow] = useState<boolean>(false);
 
   const archiveBtn = require('../../images/archive.png');

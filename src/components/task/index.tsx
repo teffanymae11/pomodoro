@@ -5,11 +5,10 @@ import { AddTaskVars } from './types'
 import { TaskVars } from '../dashboard/types';
 import { TextGroup, BtnTodo, BtnPlayBlock, BtnTodoBlock, Heading3, Paragraph } from '../styles';
 import { useDispatch } from 'react-redux';
-import { addArchive } from '../../redux/actions'
+import { addArchive, taskList } from '../../redux/actions'
 const Task = ({
   val,
   startTimer,
-  setTaskList,
   resetTimer,
   handleShow,
   setUpdating,
@@ -32,12 +31,14 @@ const Task = ({
     const item = { title: val.title, notes: val.notes, favorite: val.favorite }
     // timerPomodoro()
     startTimer();
-    setTaskList(item);
+    // setTaskList(item);
+    dispatch(taskList(item))
   }
 
   const onUpdate = (val: TaskVars) => {
     handleShow();
     setUpdating(val);
+    
     setTask({ ...task, title: val.title, notes: val.notes, favorite: val.favorite })
   }
 

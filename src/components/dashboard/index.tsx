@@ -11,8 +11,10 @@ import Task from '../task';
 
 import { CustomVars, TaskVars } from './types';
 import { Dboard, Ul, BtnBlock, Img, TodoBlock, Center, BtnImg, Li } from '../styles';
+import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
+  const taskList:any = useSelector((state: any) => state.taskListReducer)
   const [custom, setCustom] = useState<CustomVars>({ pomodoro: 25, short: 3, long: 15, longTrigger: 4 });
 
   const [todo, setToDo] = useState<TaskVars[]>([])
@@ -20,8 +22,8 @@ const Dashboard = () => {
   // const [archive, setArchive] = useState<TaskVars[]>([])
 
   const [activeTimer, setActiveTimer] = useState<string>("pomodoro");
-
-  const [taskList, setTaskList] = useState<any>({})
+  // const [taskList, setTaskList] = useState<any>({})
+  
   const [updating, setUpdating] = useState<any>(null);
   const [draggedItem, setDraggedItem] = useState<any>([])
 
@@ -166,7 +168,7 @@ const Dashboard = () => {
           });
         }
       }
-    }, 1000);
+    }, 5);
 
     return () => {
       clearInterval(int);
@@ -373,7 +375,6 @@ const Dashboard = () => {
                       <Task
                         val={val}
                         startTimer={startTimer}
-                        setTaskList={setTaskList}
                         resetTimer={resetTimer}
                         handleShow={handleShow}
                         setUpdating={setUpdating}

@@ -19,10 +19,10 @@ const reduce = (state: AppState, action: any) => {
     }
 };
 
-const archive = (state: AppState = initArchive, action: any) => {
+const archiveReducer = (state: AppState = initArchive, action: any) => {
     const newState: AppState = reduce(state, action);
     localStorage.setItem("archive", JSON.stringify(newState));
     return newState;
 }
 
-export default archive;
+export default archiveReducer;

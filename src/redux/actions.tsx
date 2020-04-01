@@ -15,8 +15,9 @@ export const deleteArchive = (val: TaskVars) => {
   };
 };
 
-export const taskList = () => {
+export const taskList = (item:any) => {
   return {
-    type: actionType.TASK_LIST
+    type: actionType.TASK_LIST,
+    payload: item
   };
 };
