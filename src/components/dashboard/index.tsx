@@ -66,7 +66,6 @@ const Dashboard = () => {
                 return todo.filter((todo: TaskVars) => {
                   if (taskList.title === todo.title && taskList.notes === todo.notes) return false;
                   localStorage.removeItem("taskdata");
-                  localStorage.removeItem("favdata");
                   return true;
                 })
               });

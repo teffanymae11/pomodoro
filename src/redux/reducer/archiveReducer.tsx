@@ -1,9 +1,9 @@
-import * as actionType from './strings'
-import { AppState } from './types';
-import { TaskVars } from '../components/dashboard/types';
+import * as actionType from '../strings'
+import { AppState } from '../types';
+import { TaskVars } from '../../components/dashboard/types';
 
-const fromLocalDataJSON = localStorage.getItem("archive");
-const initState: AppState = fromLocalDataJSON == null ? [] : JSON.parse(fromLocalDataJSON)
+const archiveData = localStorage.getItem("archive");
+const initArchive: AppState = archiveData == null ? [] : JSON.parse(archiveData)
 
 const reduce = (state: AppState, action: any) => {
     switch (action.type) {
@@ -19,10 +19,10 @@ const reduce = (state: AppState, action: any) => {
     }
 };
 
-const reducer = (state: AppState = initState, action: any) => {
+const archive = (state: AppState = initArchive, action: any) => {
     const newState: AppState = reduce(state, action);
     localStorage.setItem("archive", JSON.stringify(newState));
     return newState;
 }
 
-export default reducer;
+export default archive;
