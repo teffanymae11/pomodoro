@@ -1,14 +1,18 @@
 import { combineReducers } from "redux";
-import archiveReducer from './archiveReducer'
-import taskListReducer from './taskListReducer'
+
+import customReducer from './customReducer'
 import todoReducer from './todoReducer'
 import taskReducer from './taskReducer'
+import taskListReducer from './taskListReducer'
+import archiveReducer from './archiveReducer'
 
 const reducer = combineReducers({
-    archiveReducer,
-    taskListReducer,
+    customReducer,
     todoReducer,
     taskReducer,
+    taskListReducer,
+    archiveReducer,
+
 })
 
 export default reducer

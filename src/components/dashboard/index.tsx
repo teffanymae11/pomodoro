@@ -19,8 +19,7 @@ const Dashboard = () => {
   const taskList: any = useSelector((state: any) => state.taskListReducer)
   const todo: TaskVars[] = useSelector((state: any) => state.todoReducer)
   const task: TaskVars = useSelector((state: any) => state.taskReducer)
-  
-  const [custom, setCustom] = useState<CustomVars>({ pomodoro: 25, short: 3, long: 15, longTrigger: 4 });
+  const custom: CustomVars = useSelector((state: any) => state.customReducer)
 
   const [activeTimer, setActiveTimer] = useState<string>("pomodoro");
 
@@ -74,12 +73,10 @@ const Dashboard = () => {
 
             } else {
               dispatch(filterToDo(taskList))
-
               handleClick();
               new Notification("Short Start")
               timerShort();
               startTimer();
-
               setPomodoroStat(Number(pomodoroStat) + 1);
 
               todo.filter((val: TaskVars) => {
@@ -155,7 +152,7 @@ const Dashboard = () => {
           });
         }
       }
-    }, 5);
+    }, 1000);
 
     return () => {
       clearInterval(int);
@@ -266,14 +263,11 @@ const Dashboard = () => {
           <div className="col-lg-6">
             <BtnBlock>
               <CustomTimer
-                custom={custom}
-                setCustom={setCustom}
                 setSeconds={setSeconds}
                 activeTimer={activeTimer}
               />
 
               <Favorite />
-
               <Archive />
 
               <Statistics

@@ -16,3 +16,7 @@ export const REMOVE_TODO = "REMOVE_TODO"
 export const ADD_TASK = "ADD_TASK"
 export const UPDATE_TASK = "UPDATE_TASK"
 export const CHANGE_TASK = "CHANGE_TASK"
+
+
+export const UPDATE_CUSTOM = "UPDATE_CUSTOM"
+export const CHANGE_CUSTOM = "CHANGE_CUSTOM"

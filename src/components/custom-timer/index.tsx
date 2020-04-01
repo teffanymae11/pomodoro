@@ -6,13 +6,16 @@ import ModalBody from 'react-bootstrap/ModalBody';
 import { CustomTimerVars } from './types';
 import { CustomVars } from '../dashboard/types';
 import { Btn, BtnImg } from '../styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCustom, changeCustom } from '../../redux/actions';
 
 const CustomTimer: React.FC<CustomTimerVars> = ({
-  custom,
-  setCustom,
   setSeconds,
   activeTimer
 }) => {
+  const dispatch = useDispatch();
+  const custom: CustomVars = useSelector((state: any) => state.customReducer)
+
   const [show, setShow] = useState<boolean>(false);
   const [updating, setUpdating] = useState<any>(null);
   const [time, setTime] = useState<CustomVars[]>([{ pomodoro: 25, short: 3, long: 15, longTrigger: 4 }])
@@ -20,18 +23,18 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
   const customBtn = require('../../images/custom.png');
   const saveBtn = require('../../images/save.png');
 
-  const onChange = (event: any) => {
-    setCustom({ ...custom, [event.target.name]: parseInt(event.target.value) });
-  };
-
   const onUpdate: (val: CustomVars) => void = useCallback(
     (val: CustomVars) => {
       handleShow();
       setUpdating(val);
-      setCustom({ ...custom, pomodoro: val.pomodoro, short: val.short, long: val.long, longTrigger: val.longTrigger })
+      dispatch(updateCustom(val))
     },
-    [custom, setCustom],
+    [dispatch],
   )
+
+  const onChange = (event: any) => {
+    dispatch(changeCustom(event))
+  };
 
   const onSubmit: (event: any) => void = useCallback(
     (event: any) => {
@@ -61,10 +64,10 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
     },
     [activeTimer, custom.long, custom.longTrigger, custom.pomodoro, custom.short, updating, setSeconds],
   )
-  
+
   const getButton = () => {
     if (updating !== null) {
-      return (<button type="submit"><BtnImg src={saveBtn} alt=""/></button>)
+      return (<button type="submit"><BtnImg src={saveBtn} alt="" /></button>)
     }
   }
 
