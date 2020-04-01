@@ -24,8 +24,6 @@ const DisplayTimer: React.FC<DisplayTimerVars> = ({
   setSkipStat,
   cycleStat,
   setCycleStat,
-  task,
-  setTask,
   handleShow,
   handleClose,
   show,
@@ -123,8 +121,6 @@ const DisplayTimer: React.FC<DisplayTimerVars> = ({
 
       <AddTodoBlock>
         <Todo
-          task={task}
-          setTask={setTask}
           handleShow={handleShow}
           handleClose={handleClose}
           show={show}

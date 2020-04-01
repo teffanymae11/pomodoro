@@ -5,10 +5,11 @@ import ModalTitle from 'react-bootstrap/ModalTitle';
 import ModalBody from 'react-bootstrap/ModalBody';
 import { TodoVars } from './types'
 import { Btn } from '../styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTask } from '../../redux/actions';
+import { TaskVars } from '../dashboard/types';
 
 const Todo: React.FC<TodoVars> = ({
-  task,
-  setTask,
   handleShow,
   handleClose,
   show,
@@ -16,11 +17,13 @@ const Todo: React.FC<TodoVars> = ({
   getButton
 
 }) => {
+  const dispatch = useDispatch();
+  const task: TaskVars = useSelector((state: any) => state.taskReducer)
 
   const addtodoBtn = require('../../images/add-todo.png');
 
   const onChange = (event: any) => {
-    setTask({ ...task, [event.target.name]: event.target.value });
+    dispatch(changeTask(event))
   };
 
   return (

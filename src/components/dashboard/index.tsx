@@ -12,16 +12,15 @@ import Task from '../task';
 import { CustomVars, TaskVars } from './types';
 import { Dboard, Ul, BtnBlock, Img, TodoBlock, Center, BtnImg, Li } from '../styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterToDo, addToDo, updateToDo, dragToDo } from '../../redux/actions'
+import { filterToDo, addToDo, updateToDo, dragToDo, addTask } from '../../redux/actions'
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const taskList: any = useSelector((state: any) => state.taskListReducer)
   const todo: TaskVars[] = useSelector((state: any) => state.todoReducer)
+  const task: TaskVars = useSelector((state: any) => state.taskReducer)
   
   const [custom, setCustom] = useState<CustomVars>({ pomodoro: 25, short: 3, long: 15, longTrigger: 4 });
-
-  const [task, setTask] = useState<TaskVars>({ title: '', notes: '', favorite: false });
 
   const [activeTimer, setActiveTimer] = useState<string>("pomodoro");
 
@@ -235,8 +234,7 @@ const Dashboard = () => {
     } else {
       dispatch(updateToDo(task, updating))
     }
-
-    setTask({ ...task, title: '', notes: '' });
+    dispatch(addTask())
     handleClose();
   };
 
@@ -310,8 +308,6 @@ const Dashboard = () => {
               setSkipStat={setSkipStat}
               cycleStat={cycleStat}
               setCycleStat={setCycleStat}
-              task={task}
-              setTask={setTask}
               handleShow={handleShow}
               handleClose={handleClose}
               show={show}
@@ -333,8 +329,6 @@ const Dashboard = () => {
                         resetTimer={resetTimer}
                         handleShow={handleShow}
                         setUpdating={setUpdating}
-                        task={task}
-                        setTask={setTask}
                         setDraggedItem={setDraggedItem}
                       />
                     </Li>

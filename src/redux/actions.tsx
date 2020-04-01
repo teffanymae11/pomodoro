@@ -1,6 +1,7 @@
 import * as actionType from './strings'
 import { TaskVars } from '../components/dashboard/types';
 
+// ARCHIVE ACTIONS
 export const addArchive = (item: TaskVars) => {
   return {
     type: actionType.ADD_ARCHIVE,
@@ -15,12 +16,15 @@ export const deleteArchive = (val: TaskVars) => {
   };
 };
 
+// TASKLIST
 export const taskList = (item: any) => {
   return {
     type: actionType.TASK_LIST,
     payload: item
   };
 };
+
+// TODO ACTIONS
 
 export const filterToDo = (taskList: any) => {
   return {
@@ -80,3 +84,25 @@ export const addFavoriteToDo = (item: any) => {
     payload: item
   }
 }
+
+// TASK ACTIONS
+
+export const addTask = () => {
+  return {
+    type: actionType.ADD_TASK
+  };
+};
+
+export const updateTask = (val: TaskVars) => {
+  return {
+    type: actionType.UPDATE_TASK,
+    payload: val
+  };
+};
+
+export const changeTask = (event: any) => {
+  return {
+    type: actionType.CHANGE_TASK,
+    payload: event
+  };
+};

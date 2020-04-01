@@ -5,18 +5,18 @@ import { AddTaskVars } from './types'
 import { TaskVars } from '../dashboard/types';
 import { TextGroup, BtnTodo, BtnPlayBlock, BtnTodoBlock, Heading3, Paragraph } from '../styles';
 import { useDispatch } from 'react-redux';
-import { addArchive, taskList, favoriteToDo, removeToDo } from '../../redux/actions'
-const Task = ({
+import { addArchive, taskList, favoriteToDo, removeToDo, updateTask } from '../../redux/actions'
+
+const Task: React.FC<AddTaskVars> = ({
   val,
   startTimer,
   resetTimer,
   handleShow,
   setUpdating,
-  task,
-  setTask,
   setDraggedItem
-}: AddTaskVars) => {
+}) => {
   const dispatch = useDispatch();
+
   const playtodoBtn = require('../../images/play-todo.png');
   // const favoriteBtn = require('../../images/favorite-todo.png');
   const unfavoriteBtn = require('../../images/unfavorite-todo.png');
@@ -35,14 +35,14 @@ const Task = ({
   const onUpdate = (val: TaskVars) => {
     handleShow();
     setUpdating(val);
-    setTask({ ...task, title: val.title, notes: val.notes, favorite: val.favorite })
+    dispatch(updateTask(val))
   }
 
   const onFavorite: (val: TaskVars) => void = useCallback(
     () => {
       dispatch(favoriteToDo(val))
     },
-    [ dispatch, val],
+    [dispatch, val],
   )
 
   const onRemove: (val: TaskVars) => void = useCallback(

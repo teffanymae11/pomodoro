@@ -12,3 +12,7 @@ export const ADD_FAVORITE_TODO = "ADD_FAVORITE_TODO"
 export const FAVORITE_TODO = "FAVORITE_TODO"
 export const UNFAVORITE_TODO = "UNFAVORITE_TODO"
 export const REMOVE_TODO = "REMOVE_TODO"
+
+export const ADD_TASK = "ADD_TASK"
+export const UPDATE_TASK = "UPDATE_TASK"
+export const CHANGE_TASK = "CHANGE_TASK"

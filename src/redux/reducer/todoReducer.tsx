@@ -7,11 +7,12 @@ const initTask: AppState = taskData == null ? [] : JSON.parse(taskData)
 
 const reduce = (state: AppState, action: any) => {
     let todoData = [...state]
+    let val = action.payload
 
     switch (action.type) {
         case actionType.FILTER_TODO:
             const remove = todoData.filter((todo: TaskVars) => {
-                if (action.payload.title === todo.title && action.payload.notes === todo.notes) {
+                if (val.title === todo.title && val.notes === todo.notes) {
                     localStorage.removeItem("taskdata");
                     return false;
                 }
@@ -20,14 +21,14 @@ const reduce = (state: AppState, action: any) => {
             return remove;
 
         case actionType.ADD_TODO:
-            return [...state, action.payload]
+            return [...state, val]
 
         case actionType.UPDATE_TODO:
             const taskEdit = todoData.filter((todo: TaskVars) => {
-                if (todo === action.payload.updating) {
-                    todo.title = action.payload.task.title;
-                    todo.notes = action.payload.task.notes;
-                    todo.favorite = action.payload.task.favorite;
+                if (todo === val.updating) {
+                    todo.title = val.task.title;
+                    todo.notes = val.task.notes;
+                    todo.favorite = val.task.favorite;
                 } return true;
             })
 
@@ -35,17 +36,17 @@ const reduce = (state: AppState, action: any) => {
             return taskEdit
 
         case actionType.DRAG_TODO:
-            return action.payload
+            return val
 
         case actionType.ADD_FAVORITE_TODO:
-            localStorage.setItem("taskdata", JSON.stringify([...todoData, action.payload]));
-            return [...state, action.payload]
+            localStorage.setItem("taskdata", JSON.stringify([...todoData, val]));
+            return [...state, val]
 
         case actionType.FAVORITE_TODO:
             const taskFav = todoData.filter((todo: TaskVars) => {
-                if (todo === action.payload) {
-                    todo.title = action.payload.title;
-                    todo.notes = action.payload.notes;
+                if (todo === val) {
+                    todo.title = val.title;
+                    todo.notes = val.notes;
                     todo.favorite = true;
                 } return true;
             })
@@ -53,21 +54,21 @@ const reduce = (state: AppState, action: any) => {
             localStorage.setItem("taskdata", JSON.stringify(taskFav));
             return taskFav
 
-            case actionType.UNFAVORITE_TODO:
-                const taskUnFav = todoData.filter((todo: TaskVars) => {
-                    if (todo === action.payload) {
-                        todo.title = action.payload.title;
-                        todo.notes = action.payload.notes;
-                        todo.favorite = false;
-                    } return true;
-                })
-    
-                localStorage.setItem("taskdata", JSON.stringify(taskUnFav));
-                return taskUnFav
+        case actionType.UNFAVORITE_TODO:
+            const taskUnFav = todoData.filter((todo: TaskVars) => {
+                if (todo === val) {
+                    todo.title = val.title;
+                    todo.notes = val.notes;
+                    todo.favorite = false;
+                } return true;
+            })
+
+            localStorage.setItem("taskdata", JSON.stringify(taskUnFav));
+            return taskUnFav
 
         case actionType.REMOVE_TODO:
             localStorage.removeItem("taskdata");
-            const removetask = todoData.filter((task: TaskVars) => action.payload.title !== task.title || action.payload.notes !== task.notes || action.payload.favorite !== task.favorite);
+            const removetask = todoData.filter((task: TaskVars) => val.title !== task.title || val.notes !== task.notes || val.favorite !== task.favorite);
             localStorage.setItem("taskdata", JSON.stringify(removetask));
             return removetask
 
