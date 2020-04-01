@@ -5,7 +5,7 @@ import { AddTaskVars } from './types'
 import { TaskVars } from '../dashboard/types';
 import { TextGroup, BtnTodo, BtnPlayBlock, BtnTodoBlock, Heading3, Paragraph } from '../styles';
 import { useDispatch } from 'react-redux';
-import { addArchive, taskList } from '../../redux/actions'
+import { addArchive, taskList, favoriteToDo, removeToDo } from '../../redux/actions'
 const Task = ({
   val,
   startTimer,
@@ -14,7 +14,6 @@ const Task = ({
   setUpdating,
   task,
   setTask,
-  setToDo,
   setDraggedItem
 }: AddTaskVars) => {
   const dispatch = useDispatch();
@@ -24,58 +23,36 @@ const Task = ({
   const editBtn = require('../../images/edit-todo.png');
   const deleteBtn = require('../../images/delete-todo.png');
 
-
   useHotkeys('ctrl+alt+s', () => onStart(val));
 
   const onStart = (val: TaskVars) => {
     const item = { title: val.title, notes: val.notes, favorite: val.favorite }
     // timerPomodoro()
     startTimer();
-    // setTaskList(item);
     dispatch(taskList(item))
   }
 
   const onUpdate = (val: TaskVars) => {
     handleShow();
     setUpdating(val);
-    
     setTask({ ...task, title: val.title, notes: val.notes, favorite: val.favorite })
   }
 
   const onFavorite: (val: TaskVars) => void = useCallback(
     () => {
-      setToDo((todo: TaskVars[]) => {
-        const taskedit = todo.filter((todo: TaskVars) => {
-          if (todo === val) {
-            todo.title = val.title;
-            todo.notes = val.notes;
-            todo.favorite = true;
-          } return true;
-        })
-
-        localStorage.setItem("taskdata", JSON.stringify(taskedit));
-        return taskedit
-      })
+      dispatch(favoriteToDo(val))
     },
-    [ setToDo, val],
+    [ dispatch, val],
   )
 
   const onRemove: (val: TaskVars) => void = useCallback(
     (val: TaskVars) => {
-      setToDo((todo: TaskVars[]) => {
-        localStorage.removeItem("taskdata");
-        const removetask = todo.filter((todo: TaskVars) => todo !== val)
-        localStorage.setItem("taskdata", JSON.stringify(removetask));
-        return removetask
-      })
-
       const item = { title: val.title, notes: val.notes, favorite: val.favorite }
-      // setArchive([...archive, item])
+      dispatch(removeToDo(val))
       dispatch(addArchive(item))
-      // localStorage.setItem("archive", JSON.stringify([...archive, item]));
       resetTimer()
     },
-    [resetTimer, setToDo, dispatch],
+    [resetTimer, dispatch],
   )
 
   const onDragStart = (val: TaskVars) => {

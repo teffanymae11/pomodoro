@@ -8,7 +8,5 @@ export type AddTaskVars = {
     setUpdating: React.Dispatch<any>,
     task: TaskVars,
     setTask: React.Dispatch<React.SetStateAction<TaskVars>>,
-    setToDo: React.Dispatch<React.SetStateAction<TaskVars[]>>
     setDraggedItem: any
-    todo: TaskVars[]
 }

@@ -11,19 +11,20 @@ import Task from '../task';
 
 import { CustomVars, TaskVars } from './types';
 import { Dboard, Ul, BtnBlock, Img, TodoBlock, Center, BtnImg, Li } from '../styles';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterToDo, addToDo, updateToDo, dragToDo } from '../../redux/actions'
 
 const Dashboard = () => {
-  const taskList:any = useSelector((state: any) => state.taskListReducer)
+  const dispatch = useDispatch();
+  const taskList: any = useSelector((state: any) => state.taskListReducer)
+  const todo: TaskVars[] = useSelector((state: any) => state.todoReducer)
+  
   const [custom, setCustom] = useState<CustomVars>({ pomodoro: 25, short: 3, long: 15, longTrigger: 4 });
 
-  const [todo, setToDo] = useState<TaskVars[]>([])
   const [task, setTask] = useState<TaskVars>({ title: '', notes: '', favorite: false });
-  // const [archive, setArchive] = useState<TaskVars[]>([])
 
   const [activeTimer, setActiveTimer] = useState<string>("pomodoro");
-  // const [taskList, setTaskList] = useState<any>({})
-  
+
   const [updating, setUpdating] = useState<any>(null);
   const [draggedItem, setDraggedItem] = useState<any>([])
 
@@ -64,13 +65,8 @@ const Dashboard = () => {
               return s - 1
 
             } else if (count >= Number(custom.longTrigger)) {
-              setToDo((todo: TaskVars[]) => {
-                return todo.filter((todo: TaskVars) => {
-                  if (taskList.title === todo.title && taskList.notes === todo.notes) return false;
-                  localStorage.removeItem("taskdata");
-                  return true;
-                })
-              });
+              dispatch(filterToDo(taskList))
+
               new Notification("Long Start")
               setPomodoroStat(Number(pomodoroStat) + 1);
               timerLong();
@@ -78,15 +74,7 @@ const Dashboard = () => {
               setCount(1);
 
             } else {
-              setToDo((todo: TaskVars[]) => {
-                const remove = todo.filter((todo: TaskVars) => {
-                  if (taskList.title === todo.title && taskList.notes === todo.notes) {
-                    return false;
-                  }
-                  return true;
-                })
-                return remove
-              });
+              dispatch(filterToDo(taskList))
 
               handleClick();
               new Notification("Short Start")
@@ -175,13 +163,6 @@ const Dashboard = () => {
     };
   });
 
-  useEffect(() => {
-    const getData = localStorage.getItem("taskdata")
-    if (getData !== null) {
-      setToDo(JSON.parse(getData))
-    }
-  }, [])
-
   const startTimer = () => {
     new Notification("Pomodoro Start")
     setPause(false)
@@ -238,13 +219,6 @@ const Dashboard = () => {
     task.notes = '';
   };
 
-  const getTaskData = () => {
-    const getData = localStorage.getItem("taskdata");
-    if (getData == null) return
-    const finalData = JSON.parse(getData)
-    setToDo(finalData)
-  }
-
   const onSubmit = (event: any) => {
     event.preventDefault();
 
@@ -255,24 +229,11 @@ const Dashboard = () => {
     };
 
     if (updating == null) {
-      setToDo([...todo, newTask]);
+      dispatch(addToDo(newTask))
       localStorage.setItem("taskdata", JSON.stringify([...todo, newTask]));
-      getTaskData();
 
     } else {
-
-      setToDo((todo: TaskVars[]) => {
-        const taskedit = todo.filter((todo: TaskVars) => {
-          if (todo === updating) {
-            todo.title = task.title;
-            todo.notes = task.notes;
-            todo.favorite = task.favorite;
-          } return true;
-        })
-
-        localStorage.setItem("taskdata", JSON.stringify(taskedit));
-        return taskedit
-      })
+      dispatch(updateToDo(task, updating))
     }
 
     setTask({ ...task, title: '', notes: '' });
@@ -292,7 +253,7 @@ const Dashboard = () => {
     if (draggedItem === val) return;
     let items = todo.filter(todo => todo !== draggedItem);
     items.splice(index, 0, draggedItem);
-    setToDo(items)
+    dispatch(dragToDo(items))
     localStorage.setItem("taskdata", JSON.stringify(items));
   };
 
@@ -313,15 +274,9 @@ const Dashboard = () => {
                 activeTimer={activeTimer}
               />
 
-              <Favorite
-                todo={todo}
-                setToDo={setToDo}
-              />
+              <Favorite />
 
-              <Archive
-                todo={todo}
-                setToDo={setToDo}
-              />
+              <Archive />
 
               <Statistics
                 pomodoroStat={pomodoroStat}
@@ -380,8 +335,6 @@ const Dashboard = () => {
                         setUpdating={setUpdating}
                         task={task}
                         setTask={setTask}
-                        todo={todo}
-                        setToDo={setToDo}
                         setDraggedItem={setDraggedItem}
                       />
                     </Li>

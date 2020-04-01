@@ -3,41 +3,26 @@ import Modal from 'react-modal';
 import ModalHeader from 'react-bootstrap/ModalHeader';
 import ModalTitle from 'react-bootstrap/ModalTitle';
 import ModalBody from 'react-bootstrap/ModalBody';
-import { FavoriteVars } from './types';
 import { TaskVars } from '../dashboard/types';
 import { Btn, Li, TextGroup, Heading3, Paragraph, BtnTodoBlock, BtnTodo, Ul } from '../styles';
-import { useDispatch } from 'react-redux';
-import { addArchive } from '../../redux/actions'
+import { useDispatch, useSelector } from 'react-redux';
+import { addArchive, unfavoriteToDo, removeToDo } from '../../redux/actions'
 
-const Favorite: React.FC<FavoriteVars> = ({
-  setToDo,
-  todo
-}) => {
+const Favorite = () => {
+  const todo: TaskVars[] = useSelector((state: any) => state.todoReducer)
   const dispatch = useDispatch();
   const favoriteBtn = require('../../images/favorite.png');
   const favoritetodoBtn = require('../../images/favorite-todo.png');
   const deleteBtn = require('../../images/delete-todo.png');
 
+  const [show, setShow] = useState<boolean>(false);
+
   const onFavorite: (val: TaskVars) => void = useCallback(
     (val: TaskVars) => {
-      setToDo((todo: TaskVars[]) => {
-        const taskedit = todo.filter((todo: TaskVars) => {
-          if (todo === val) {
-            todo.title = val.title;
-            todo.notes = val.notes;
-            todo.favorite = false;
-          } return true;
-        })
-
-        localStorage.setItem("taskdata", JSON.stringify(taskedit));
-        return taskedit
-      })
+      dispatch(unfavoriteToDo(val))
     },
-    [setToDo],
+    [dispatch],
   )
-
-
-  const [show, setShow] = useState<boolean>(false);
 
   const handleShow = () => {
     setShow(true);
@@ -49,19 +34,11 @@ const Favorite: React.FC<FavoriteVars> = ({
 
   const onRemove: (val: TaskVars) => void = useCallback(
     (val: TaskVars) => {
-      setToDo((todo: TaskVars[]) => {
-        localStorage.removeItem("taskdata");
-        const removetask = todo.filter((task: TaskVars) => val.title !== task.title || val.notes !== task.notes || val.favorite !== task.favorite);
-        localStorage.setItem("taskdata", JSON.stringify(removetask));
-        return removetask
-      })
-
       const item = { title: val.title, notes: val.notes, favorite: val.favorite }
-      // setArchive([...archive, item])
+      dispatch(removeToDo(val))
       dispatch(addArchive(item))
-      // localStorage.setItem("archive", JSON.stringify([...archive, item]));
     },
-    [setToDo, dispatch],
+    [ dispatch],
   )
 
   const favoriteList = useMemo(() => {
