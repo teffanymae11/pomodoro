@@ -14,8 +14,6 @@ const reduce = (state: TaskVars, action: any) => {
         case actionType.UPDATE_TASK:
             return { ...state, title: val.title, notes: val.notes, favorite: val.favorite }
 
-        case actionType.CHANGE_TASK:
-            return { ...state, [val.target.name]: val.target.value }
         default:
             return state;
     }

@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import * as Yup from 'yup'
 import { Formik } from 'formik';
 import Modal from 'react-modal';
 import ModalHeader from 'react-bootstrap/ModalHeader';
@@ -23,13 +22,6 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
     long: 15,
     longTrigger: 4
   }
-
-  const validationSchema: Yup.ObjectSchema<CustomVars> = Yup.object().shape({
-    pomodoro: Yup.number().required("Require"),
-    short: Yup.number().required("Require"),
-    long: Yup.number().required("Require"),
-    longTrigger: Yup.number().required("Require")
-  });
 
   const [show, setShow] = useState<boolean>(false);
   const [updating, setUpdating] = useState<any>(null);
@@ -100,7 +92,6 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
 
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
         onSubmit={onSubmit}>
 
         {formik => (

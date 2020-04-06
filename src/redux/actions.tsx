@@ -98,13 +98,6 @@ export const updateTask = (val: TaskVars) => {
   };
 };
 
-export const changeTask = (event: any) => {
-  return {
-    type: actionType.CHANGE_TASK,
-    payload: event
-  };
-};
-
 // CUSTOM ACTIONS
 export const updateCustom = (val: CustomVars) => {
   return {
