@@ -113,9 +113,9 @@ export const updateCustom = (val: CustomVars) => {
   };
 };
 
-export const changeCustom = (event: any) => {
+export const changeCustom = (values: CustomVars) => {
   return {
     type: actionType.CHANGE_CUSTOM,
-    payload: event
+    payload: values
   };
 };

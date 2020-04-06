@@ -14,7 +14,12 @@ const reduce = (state: CustomVars, action: any) => {
             return { ...state, pomodoro: val.pomodoro, short: val.short, long: val.long, longTrigger: val.longTrigger }
 
         case actionType.CHANGE_CUSTOM:
-            return { ...state, [val.target.name]: parseInt(val.target.value) }
+            const newPomodoro = val.pomodoro;
+            const newShort = val.short;
+            const newLong = val.long;
+            const newLongTrigger = val.longTrigger;
+            return { ...state, pomodoro: newPomodoro, short: newShort, long: newLong, longTrigger: newLongTrigger }
+            
         default:
             return state;
     }
