@@ -21,9 +21,9 @@ export type DisplayTimerVars = {
     setSkipStat: React.Dispatch<React.SetStateAction<Number>>
     cycleStat: Number
     setCycleStat: React.Dispatch<React.SetStateAction<Number>>
+    updating: any
+    todo: TaskVars[]
     handleShow: () => void,
     handleClose: () => void,
-    show: boolean,
-    onSubmit: (event: any) => void,
-    getButton: () => JSX.Element
+    show: boolean
 }

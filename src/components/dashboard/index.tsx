@@ -10,9 +10,9 @@ import DisplayTimer from '../display-timer';
 import Task from '../task';
 
 import { CustomVars, TaskVars } from './types';
-import { Dboard, Ul, BtnBlock, Img, TodoBlock, Center, BtnImg, Li } from '../styles';
+import { Dboard, Ul, BtnBlock, Img, TodoBlock, Center, Li } from '../styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterToDo, addToDo, updateToDo, dragToDo, addTask } from '../../redux/actions'
+import { filterToDo, dragToDo } from '../../redux/actions'
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -35,15 +35,12 @@ const Dashboard = () => {
   const [cycleStat, setCycleStat] = useState<Number>(0);
   const [timeStat, setTimeStat] = useState<Number>(0);
 
-  const [show, setShow] = useState<boolean>(false);
   const [auto, setAuto] = useState<boolean>(true);
   const [autoButton, setAutoButton] = useState<boolean>(false);
   const [pause, setPause] = useState<boolean>(true);
 
   const todoBtn = require('../../images/todo.png');
   const hr2Btn = require('../../images/hr2.png');
-  const saveBtn = require('../../images/save.png');
-  const editBtn = require('../../images/edit.png');
 
   let pomodoro = custom.pomodoro, short = custom.short, long = custom.long;
 
@@ -209,41 +206,6 @@ const Dashboard = () => {
     setSeconds(Number(long) * 60);
   }
 
-  const handleShow = () => {
-    setShow(true)
-    task.title = '';
-    task.notes = '';
-  };
-
-  const onSubmit = (event: any) => {
-    event.preventDefault();
-
-    const newTask = {
-      title: task.title,
-      notes: task.notes,
-      favorite: task.favorite
-    };
-
-    if (updating == null) {
-      dispatch(addToDo(newTask))
-      localStorage.setItem("taskdata", JSON.stringify([...todo, newTask]));
-
-    } else {
-      dispatch(updateToDo(task, updating))
-    }
-    dispatch(addTask())
-    handleClose();
-  };
-
-  const getButton = () => {
-    if (updating == null) {
-      return (<button type="submit"><BtnImg src={saveBtn} alt="" /></button>)
-
-    } else {
-      return (<button type="submit"><BtnImg src={editBtn} alt="" /></button>)
-    }
-  }
-
   const onDragOver = (val: TaskVars, index: number) => {
     if (draggedItem === val) return;
     let items = todo.filter(todo => todo !== draggedItem);
@@ -252,10 +214,19 @@ const Dashboard = () => {
     localStorage.setItem("taskdata", JSON.stringify(items));
   };
 
+  const [show, setShow] = useState<boolean>(false);
+  
+  const handleShow = () => {
+    setShow(true)
+    task.title = '';
+    task.notes = '';
+  };
+
   const handleClose = () => {
     setShow(false);
     setUpdating(null);
   }
+
   return (
     <Dboard>
       <Center className="container">
@@ -302,11 +273,11 @@ const Dashboard = () => {
               setSkipStat={setSkipStat}
               cycleStat={cycleStat}
               setCycleStat={setCycleStat}
+              updating={updating}
+              todo={todo}
               handleShow={handleShow}
               handleClose={handleClose}
               show={show}
-              onSubmit={onSubmit}
-              getButton={getButton}
             />
           </div>
 

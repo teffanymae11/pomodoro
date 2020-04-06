@@ -24,11 +24,11 @@ const DisplayTimer: React.FC<DisplayTimerVars> = ({
   setSkipStat,
   cycleStat,
   setCycleStat,
+  updating,
+  todo,
   handleShow,
   handleClose,
-  show,
-  onSubmit,
-  getButton
+  show
 }) => {
 
   const hr1 = require('../../images/hr1.png');
@@ -121,11 +121,11 @@ const DisplayTimer: React.FC<DisplayTimerVars> = ({
 
       <AddTodoBlock>
         <Todo
+          updating={updating}
+          todo={todo}
           handleShow={handleShow}
           handleClose={handleClose}
           show={show}
-          onSubmit={onSubmit}
-          getButton={getButton}
         />
       </AddTodoBlock>
     </TimerDisplay >
