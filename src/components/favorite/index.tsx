@@ -24,13 +24,8 @@ const Favorite = () => {
     [dispatch],
   )
 
-  const handleShow = () => {
-    setShow(true);
-  }
-
-  const handleClose = () => {
-    setShow(false);
-  }
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   const onRemove: (val: TaskVars) => void = useCallback(
     (val: TaskVars) => {
@@ -53,8 +48,8 @@ const Favorite = () => {
             </TextGroup>
 
             <BtnTodoBlock>
-              <BtnTodo src={favoritetodoBtn} title="Unfavorite" onClick={() => onFavorite(val)} />
-              <BtnTodo src={deleteBtn} title="Delete" onClick={() => onRemove(val)} />
+              <BtnTodo src={favoritetodoBtn} data-testid="unfavorite" title="Unfavorite" onClick={() => onFavorite(val)} />
+              <BtnTodo src={deleteBtn} data-testid="delete" title="Delete" onClick={() => onRemove(val)} />
             </BtnTodoBlock>
           </Li>
         )
@@ -64,10 +59,10 @@ const Favorite = () => {
 
   return (
     <>
-      <Btn src={favoriteBtn} title="Favorite" onClick={() => handleShow()} />
+      <Btn src={favoriteBtn} data-testid="favorite" title="Favorite" onClick={() => handleShow()} />
 
       <Modal isOpen={show} onRequestClose={handleClose} ariaHideApp={false}>
-        <ModalHeader closeButton onClick={handleClose}>
+        <ModalHeader closeButton data-testid="close" onClick={handleClose}>
           <ModalTitle>Favorite</ModalTitle>
         </ModalHeader>
 

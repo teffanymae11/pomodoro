@@ -10,7 +10,7 @@ import DisplayTimer from '../display-timer';
 import Task from '../task';
 
 import { CustomVars, TaskVars } from './types';
-import { Dboard, Ul, BtnBlock, Img, TodoBlock, Center, Li } from '../styles';
+import { Dboard, Notice, Ul, BtnBlock, Img, TodoBlock, Center, Li } from '../styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { filterToDo, dragToDo } from '../../redux/actions'
 
@@ -181,9 +181,7 @@ const Dashboard = () => {
   useHotkeys('ctrl+alt+p', () => pauseTimer());
   useHotkeys('ctrl+alt+r', () => resetTimer());
 
-  const handleClick = () => {
-    setCount(Number(count) + 1);
-  }
+  const handleClick = () => setCount(Number(count) + 1);
 
   const timerPomodoro = () => {
     setAuto(true);
@@ -193,6 +191,7 @@ const Dashboard = () => {
   }
 
   const timerShort = () => {
+    setAutoButton(false)
     setAuto(true);
     setPause(true);
     setActiveTimer("short");
@@ -200,6 +199,7 @@ const Dashboard = () => {
   }
 
   const timerLong = () => {
+    setAutoButton(false)
     setAuto(true);
     setPause(true);
     setActiveTimer("long");
@@ -228,84 +228,87 @@ const Dashboard = () => {
   }
 
   return (
-    <Dboard>
-      <Center className="container">
-        <div className="row">
-          <div className="col-lg-6">
-            <BtnBlock>
-              <CustomTimer
+    <>
+      <Dboard>
+        <Center className="container">
+          <div className="row">
+            <div className="col-lg-6">
+              <BtnBlock>
+                <CustomTimer
+                  setSeconds={setSeconds}
+                  activeTimer={activeTimer}
+                />
+
+                <Favorite />
+                <Archive />
+
+                <Statistics
+                  pomodoroStat={pomodoroStat}
+                  shortStat={shortStat}
+                  longStat={longStat}
+                  skipStat={skipStat}
+                  timeStat={timeStat}
+                  cycleStat={cycleStat}
+                />
+              </BtnBlock>
+
+
+              <DisplayTimer
+                custom={custom}
+                startTimer={startTimer}
+                pauseTimer={pauseTimer}
+                resetTimer={resetTimer}
+                handleClick={handleClick}
+                timerPomodoro={timerPomodoro}
+                timerShort={timerShort}
+                timerLong={timerLong}
+                seconds={seconds}
                 setSeconds={setSeconds}
                 activeTimer={activeTimer}
-              />
-
-              <Favorite />
-              <Archive />
-
-              <Statistics
-                pomodoroStat={pomodoroStat}
-                shortStat={shortStat}
-                longStat={longStat}
+                setAuto={setAuto}
+                autoButton={autoButton}
+                setAutoButton={setAutoButton}
+                count={count}
+                setCount={setCount}
                 skipStat={skipStat}
-                timeStat={timeStat}
+                setSkipStat={setSkipStat}
                 cycleStat={cycleStat}
+                setCycleStat={setCycleStat}
+                updating={updating}
+                todo={todo}
+                handleShow={handleShow}
+                handleClose={handleClose}
+                show={show}
               />
-            </BtnBlock>
+            </div>
 
-
-            <DisplayTimer
-              custom={custom}
-              startTimer={startTimer}
-              pauseTimer={pauseTimer}
-              resetTimer={resetTimer}
-              handleClick={handleClick}
-              timerPomodoro={timerPomodoro}
-              timerShort={timerShort}
-              timerLong={timerLong}
-              seconds={seconds}
-              setSeconds={setSeconds}
-              activeTimer={activeTimer}
-              setAuto={setAuto}
-              autoButton={autoButton}
-              setAutoButton={setAutoButton}
-              count={count}
-              setCount={setCount}
-              skipStat={skipStat}
-              setSkipStat={setSkipStat}
-              cycleStat={cycleStat}
-              setCycleStat={setCycleStat}
-              updating={updating}
-              todo={todo}
-              handleShow={handleShow}
-              handleClose={handleClose}
-              show={show}
-            />
+            <div className="col-lg-6">
+              <TodoBlock>
+                <Img src={todoBtn} alt="" />
+                <Ul>
+                  {
+                    todo.map((val: TaskVars, index: number) => (
+                      <Li key={index} onDragOver={() => onDragOver(val, index)}>
+                        <Task
+                          val={val}
+                          startTimer={startTimer}
+                          resetTimer={resetTimer}
+                          handleShow={handleShow}
+                          setUpdating={setUpdating}
+                          setDraggedItem={setDraggedItem}
+                        />
+                      </Li>
+                    ))
+                  }
+                </Ul>
+                <img src={hr2Btn} alt="" />
+              </TodoBlock>
+            </div>
           </div>
-
-          <div className="col-lg-6">
-            <TodoBlock>
-              <Img src={todoBtn} alt="" />
-              <Ul>
-                {
-                  todo.map((val: TaskVars, index: number) => (
-                    <Li key={index} onDragOver={() => onDragOver(val, index)}>
-                      <Task
-                        val={val}
-                        startTimer={startTimer}
-                        resetTimer={resetTimer}
-                        handleShow={handleShow}
-                        setUpdating={setUpdating}
-                        setDraggedItem={setDraggedItem}
-                      />
-                    </Li>
-                  ))
-                }
-              </Ul>
-              <img src={hr2Btn} alt="" />
-            </TodoBlock>
-          </div>
-        </div>
-      </Center>
-    </Dboard>
+        </Center>
+      </Dboard>
+      <Notice>Only available to PC users</Notice>
+    </>
   );
 }
 

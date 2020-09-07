@@ -55,29 +55,26 @@ const Task: React.FC<AddTaskVars> = ({
     [resetTimer, dispatch],
   )
 
-  const onDragStart = (val: TaskVars) => {
-    setDraggedItem(val);
-  };
+  const onDragStart = (val: TaskVars) =>  setDraggedItem(val);
 
   const onDragEnd = () => null;
 
   return (
-
-    <div className="drag"
+    <div
       draggable
       onDragStart={() => { onDragStart(val) }}
       onDragEnd={onDragEnd}
     >
-      <BtnPlayBlock src={playtodoBtn} title="Start (Ctrl+Alt+S)" onClick={() => onStart(val)} />
+      <BtnPlayBlock src={playtodoBtn} data-testid="start" title="Start (Ctrl+Alt+S)" onClick={() => onStart(val)} />
       <TextGroup>
         <Heading3>{val.title}</Heading3>
         <Paragraph>{val.notes}</Paragraph>
       </TextGroup>
 
       <BtnTodoBlock>
-        <BtnTodo title="Favorite" src={unfavoriteBtn} onClick={() => onFavorite(val)} />
-        <BtnTodo title="Edit" src={editBtn} onClick={() => onUpdate(val)} />
-        <BtnTodo title="Delete" src={deleteBtn} onClick={() => onRemove(val)} />
+        <BtnTodo data-testid="favorite" title="Favorite" src={unfavoriteBtn} onClick={() => onFavorite(val)} />
+        <BtnTodo data-testid="edit" title="Edit" src={editBtn} onClick={() => onUpdate(val)} />
+        <BtnTodo data-testid="delete" title="Delete" src={deleteBtn} onClick={() => onRemove(val)} />
       </BtnTodoBlock>
     </div>
 

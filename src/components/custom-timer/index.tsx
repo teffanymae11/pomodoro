@@ -71,7 +71,7 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
 
   const getButton = () => {
     if (updating !== null) {
-      return (<button type="submit"><BtnImg src={saveBtn} alt="" /></button>)
+      return (<button data-testid="submit" type="submit"><BtnImg src={saveBtn} alt="" /></button>)
     }
   }
 
@@ -86,7 +86,7 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
     <>
       {
         time.map((val: CustomVars, index: number) => (
-          <Btn src={customBtn} title="Custom Timer" key={index} onClick={() => onUpdate(val)} />
+          <Btn src={customBtn} data-testid="custom" title="Custom Timer" key={index} onClick={() => onUpdate(val)} />
         ))
       }
 
@@ -111,10 +111,8 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
                     min="0"
                     value={Number(formik.values.pomodoro)}
                     onBlur={formik.handleBlur}
-                    onChange={formik.handleChange} />
-                  {formik.touched.pomodoro && formik.errors.pomodoro ? (
-                    <div>{formik.errors.pomodoro}</div>
-                  ) : null}
+                    onChange={formik.handleChange}
+                  />
                 </div>
 
                 <div className="from-group">
@@ -126,10 +124,8 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
                     min="0"
                     value={Number(formik.values.short)}
                     onBlur={formik.handleBlur}
-                    onChange={formik.handleChange} />
-                  {formik.touched.short && formik.errors.short ? (
-                    <div>{formik.errors.short}</div>
-                  ) : null}
+                    onChange={formik.handleChange}
+                  />
                 </div>
 
                 <div className="from-group">
@@ -141,10 +137,8 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
                     min="0"
                     value={Number(formik.values.long)}
                     onBlur={formik.handleBlur}
-                    onChange={formik.handleChange} />
-                  {formik.touched.long && formik.errors.long ? (
-                    <div>{formik.errors.long}</div>
-                  ) : null}
+                    onChange={formik.handleChange}
+                  />
                 </div>
 
                 <div className="from-group">
@@ -156,10 +150,8 @@ const CustomTimer: React.FC<CustomTimerVars> = ({
                     min="0"
                     value={Number(formik.values.longTrigger)}
                     onBlur={formik.handleBlur}
-                    onChange={formik.handleChange} />
-                  {formik.touched.longTrigger && formik.errors.longTrigger ? (
-                    <div>{formik.errors.longTrigger}</div>
-                  ) : null}
+                    onChange={formik.handleChange}
+                  />
                 </div>
                 {
                   getButton()

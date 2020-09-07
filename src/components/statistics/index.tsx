@@ -19,20 +19,15 @@ const Statistics: React.FC<StatsVars> = ({
 
   const [show, setShow] = useState<boolean>(false);
 
-  const handleShow = () => {
-    setShow(true);
-  }
-
-  const handleClose = () => {
-    setShow(false);
-  }
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   return (
     <>
-      <Btn src={statsBtn} title="Statistics" onClick={handleShow}/>
+      <Btn src={statsBtn} data-testid="stat" title="Statistics" onClick={handleShow}/>
 
       <Modal isOpen={show} onRequestClose={handleClose} ariaHideApp={false}>
-        <ModalHeader closeButton onClick={handleClose}>
+        <ModalHeader closeButton data-testid="close" onClick={handleClose}>
           <ModalTitle>Statistics</ModalTitle>
         </ModalHeader>
 

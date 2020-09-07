@@ -33,6 +33,7 @@ const Todo: React.FC<TodoVars> = ({
   handleClose,
   show
 }) => {
+
   const dispatch = useDispatch();
 
   const initialValues: TaskVars | null = {
@@ -72,16 +73,16 @@ const Todo: React.FC<TodoVars> = ({
 
   const getButton = () => {
     if (updating == null) {
-      return (<button type="submit"><BtnImg src={saveBtn} alt="" /></button>)
+      return (<button type="submit"><BtnImg data-testid="save" src={saveBtn} alt="" /></button>)
 
     } else {
-      return (<button type="submit"><BtnImg src={editBtn} alt="" /></button>)
+      return (<button data-testid="edit" type="submit"><BtnImg src={editBtn} alt="" /></button>)
     }
   }
 
   return (
     <>
-      <Btn src={addtodoBtn} onClick={handleShow} />
+      <Btn src={addtodoBtn} data-testid="show" onClick={handleShow} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -139,7 +140,6 @@ const Todo: React.FC<TodoVars> = ({
           </>
         )}
       </Formik>
-
     </>
   )
 }

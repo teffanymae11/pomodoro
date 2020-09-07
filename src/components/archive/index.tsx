@@ -26,13 +26,8 @@ const Archive = () => {
     [dispatch],
   )
 
-  const handleShow = () => {
-    setShow(true);
-  }
-
-  const handleClose = () => {
-    setShow(false);
-  }
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
   const onRemove: (val: TaskVars) => void = useCallback(
     (val: TaskVars) => {
@@ -52,8 +47,8 @@ const Archive = () => {
             </TextGroup>
 
             <BtnTodoBlock>
-              <BtnTodo src={unfavoritetodoBtn} title="Favorite" onClick={() => onFavorite(val)} />
-              <BtnTodo src={deleteBtn} title="Delete" onClick={() => onRemove(val)} />
+              <BtnTodo src={unfavoritetodoBtn} data-testid="favorite" title="Favorite" onClick={() => onFavorite(val)} />
+              <BtnTodo src={deleteBtn} data-testid="delete" title="Delete" onClick={() => onRemove(val)} />
             </BtnTodoBlock>
           </Li>
         )
@@ -63,10 +58,10 @@ const Archive = () => {
 
   return (
     <>
-      <Btn src={archiveBtn} title="Archive" onClick={() => handleShow()} />
+      <Btn src={archiveBtn} data-testid="archive" title="Archive" onClick={() => handleShow()} />
 
       <Modal isOpen={show} onRequestClose={handleClose} ariaHideApp={false}>
-        <ModalHeader closeButton onClick={handleClose}>
+        <ModalHeader closeButton data-testid="close" onClick={handleClose}>
           <ModalTitle>Archive</ModalTitle>
         </ModalHeader>
 

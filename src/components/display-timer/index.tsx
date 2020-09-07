@@ -105,17 +105,17 @@ const DisplayTimer: React.FC<DisplayTimerVars> = ({
     <TimerDisplay>
       <Header2>{`${activeTimer}`}.</Header2>
       <Hr1 src={hr1} alt="" />
-      <Btn title="Pause (Ctrl+Alt+P)" src={pauseBtn} onClick={pauseTimer} />
-      <Btn title="Reset (Ctrl+Alt+R)" src={resetBtn} onClick={resetTimer} />
+      <Btn title="Pause (Ctrl+Alt+P)" data-testid="pause" src={pauseBtn} onClick={pauseTimer} />
+      <Btn title="Reset (Ctrl+Alt+R)" data-testid="reset" src={resetBtn} onClick={resetTimer} />
 
       <Header1>{`${Math.floor(Number(seconds) / 60)}:${(Number(seconds) % 60).toString().padStart(2, "0")}`}</Header1>
 
       <BreakBlock>
-        <Btn title="Pomodoro" src={pomodoroBtn} onClick={timerPomodoro} />
-        <Btn title="Short Break" src={shortBtn} onClick={timerShort} />
-        <Btn title="Long Break" src={longBtn} onClick={timerLong} />
-        <Btn title="Auto" src={autoBtn} onClick={timerAuto} />
-        <Btn title="Skip" src={skipBtn} className={!autoButton ? "skip" : ""} onClick={skipTimer} />
+        <Btn title="Pomodoro" data-testid="pomodoro" src={pomodoroBtn} onClick={timerPomodoro} />
+        <Btn title="Short Break" data-testid="short" src={shortBtn} onClick={timerShort} />
+        <Btn title="Long Break" data-testid="long" src={longBtn} onClick={timerLong} />
+        <Btn title="Auto" data-testid="auto" src={autoBtn} onClick={timerAuto} />
+        <Btn title="Skip" data-testid="skip" src={skipBtn} className={!autoButton ? "skip" : ""} onClick={skipTimer} />
 
       </BreakBlock>
 
