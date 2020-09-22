@@ -238,10 +238,8 @@ const Dashboard = () => {
                   setSeconds={setSeconds}
                   activeTimer={activeTimer}
                 />
-
                 <Favorite />
                 <Archive />
-
                 <Statistics
                   pomodoroStat={pomodoroStat}
                   shortStat={shortStat}
@@ -251,8 +249,6 @@ const Dashboard = () => {
                   cycleStat={cycleStat}
                 />
               </BtnBlock>
-
-
               <DisplayTimer
                 custom={custom}
                 startTimer={startTimer}
@@ -302,12 +298,13 @@ const Dashboard = () => {
                   }
                 </Ul>
                 <img src={hr2Btn} alt="" />
+                <p className="text-right" style={{fontFamily: 'Courier New', fontSize: 13}}>© Teffany Mae Reyes</p>
               </TodoBlock>
             </div>
           </div>
         </Center>
       </Dboard>
-      <Notice>Only available to PC users</Notice>
+      <Notice>Available for PC users only</Notice>
     </>
   );
 }

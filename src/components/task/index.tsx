@@ -60,24 +60,23 @@ const Task: React.FC<AddTaskVars> = ({
   const onDragEnd = () => null;
 
   return (
-    <div
-      draggable
-      onDragStart={() => { onDragStart(val) }}
-      onDragEnd={onDragEnd}
-    >
-      <BtnPlayBlock src={playtodoBtn} data-testid="start" title="Start (Ctrl+Alt+S)" onClick={() => onStart(val)} />
-      <TextGroup>
-        <Heading3>{val.title}</Heading3>
-        <Paragraph>{val.notes}</Paragraph>
-      </TextGroup>
+      <div
+        draggable
+        onDragStart={() => { onDragStart(val) }}
+        onDragEnd={onDragEnd}
+      >
+        <BtnPlayBlock src={playtodoBtn} data-testid="start" title="Start (Ctrl+Alt+S)" onClick={() => onStart(val)} />
+        <TextGroup>
+          <Heading3>{val.title}</Heading3>
+          <Paragraph>{val.notes}</Paragraph>
+        </TextGroup>
 
-      <BtnTodoBlock>
-        <BtnTodo data-testid="favorite" title="Favorite" src={unfavoriteBtn} onClick={() => onFavorite(val)} />
-        <BtnTodo data-testid="edit" title="Edit" src={editBtn} onClick={() => onUpdate(val)} />
-        <BtnTodo data-testid="delete" title="Delete" src={deleteBtn} onClick={() => onRemove(val)} />
-      </BtnTodoBlock>
-    </div>
-
+        <BtnTodoBlock>
+          <BtnTodo data-testid="favorite" title="Favorite" src={unfavoriteBtn} onClick={() => onFavorite(val)} />
+          <BtnTodo data-testid="edit" title="Edit" src={editBtn} onClick={() => onUpdate(val)} />
+          <BtnTodo data-testid="delete" title="Delete" src={deleteBtn} onClick={() => onRemove(val)} />
+        </BtnTodoBlock>
+      </div>
   );
 };
 
