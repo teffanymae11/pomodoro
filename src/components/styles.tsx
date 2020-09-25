@@ -36,6 +36,9 @@ export const BtnBlock = styled.div`
 `
 
 export const Ul = styled.ul`
+  ::-webkit-scrollbar {
+      display: none;
+  }
   height: 293px;
   max-height: 293px;
   overflow-y: scroll;
