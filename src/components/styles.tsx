@@ -127,6 +127,7 @@ export const Heading3 = styled.h3`
   font-size: 17px;
   max-width: 245px;
   margin-bottom: 0;
+  line-break: anywhere;
 `
 
 export const Paragraph = styled.p`
@@ -138,6 +139,7 @@ export const Paragraph = styled.p`
   font-weight: normal;
   font-size: 11px;
   text-align: left;
+  line-break: anywhere;
 `
 
 export const BtnPlayBlock = styled.img`
